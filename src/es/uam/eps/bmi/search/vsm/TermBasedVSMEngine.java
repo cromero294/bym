@@ -24,13 +24,12 @@ public class TermBasedVSMEngine extends AbstractVSMEngine {
 		HashMap<Integer, Double> diccionario_id_frec = new HashMap<Integer, Double>();
 		
 		double freq = 0;
-		int numDocumentos = index.numDocs();
 		
 		for(String palabra : palabras_query) {
 			PostingsList postings = this.index.getPostings(palabra);
 			
 			for(Posting post : postings) {
-				freq = AbstractVSMEngine.tfidf(post.getFreq(), index.getDocFreq(palabra), numDocumentos);
+				freq = AbstractVSMEngine.tfidf(post.getFreq(), index.getDocFreq(palabra), index.numDocs());
 				
 				if(diccionario_id_frec.containsKey(post.getDocID())) {
 					freq += diccionario_id_frec.get(post.getDocID());
